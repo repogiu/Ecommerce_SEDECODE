@@ -5,11 +5,11 @@ import os
 from dotenv import load_dotenv
 import mercadopago
 
-POSTGRESQL_USER = 'postgres'
-PASSWORD = '123456'
-HOST = 'localhost'
-PORT = '5431'
-DATABASE = 'sedecode'
+POSTGRES_USER='postgres'
+PASSWORD='123456'
+HOST='localhost'
+PORT='5431'
+DATABASE='sedecode'
 
 # Inicializar el SDK de MercadoPago con una clave de prueba
 sdk = mercadopago.SDK('TEST-8984584947035732-110809-57e9bd7292f56485fa88e609da2c205b-444290765')
@@ -212,14 +212,14 @@ def admin_products_send():
 
 # Genero la conexión a la Base de Datos
 @app.route('/test_db_connection')
+# Genero la conexión a la Base de Datos
 def get_db_connection():
     conn = psycopg2.connect(
-        host=os.getenv('HOST'),
-        database=os.getenv('DATABASE'),
-        user=os.getenv('POSTGRESQL_USER'),
-        password=os.getenv('PASSWORD'),
-        port=os.getenv('PORT')
-    )
+        host=HOST,
+        database=DATABASE,
+        user=POSTGRES_USER,
+        password=PASSWORD,
+        port=PORT )
     return conn
 
 
@@ -295,3 +295,4 @@ if __name__ == '__main__':
 
 # Inicia la aplicación en modo de depuración
 if __name__ == '__main__': app.run(host='0.0.0.0', port=os.getenv('PORT', 5000), debug=True)
+
