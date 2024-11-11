@@ -1,0 +1,67 @@
+<!-- Pie de página del sitio web, con estilo claro y texto oscuro, centrado y con espacio superior automático -->
+<footer class="mt-auto bg-light text-dark text-center py-3">
+    <div class="container">
+        <!-- Derechos de autor, mostrando el nombre de la empresa y el año -->
+        <p class="mb-0">© 2024 Bistro Bon Appétit. Todos los derechos reservados.</p>
+
+        <!-- Enlaces a páginas de Política de Privacidad, Términos y Condiciones, y Contacto -->
+        <p class="mb-0">
+            <a href="#" class="text-dark">Política de Privacidad</a> |
+            <a href="#" class="text-dark">Términos y Condiciones</a> |
+            <a href="#" class="text-dark">Contacto</a>
+        </p>
+
+        <!-- Íconos de redes sociales: Facebook, Twitter e Instagram -->
+        <div class="mt-3">
+            <a href="#" class="text-dark me-3"><i class="bi bi-facebook"></i></a>
+            <a href="#" class="text-dark me-3"><i class="bi bi-twitter"></i></a>
+            <a href="#" class="text-dark"><i class="bi bi-instagram"></i></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Integración de JavaScript de Bootstrap desde CDN para funcionalidades adicionales y componentes interactivos -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+<script>
+    // Espera a que el DOM esté completamente cargado antes de ejecutar el código
+    document.addEventListener('DOMContentLoaded', () => {
+        // Selecciona todos los botones con clase 'delete-product' (botones de eliminación de productos)
+        const deleteButtons = document.querySelectorAll('.delete-product');
+
+        // Añade un evento 'click' a cada botón de eliminación
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', async () => {
+
+                // Obtiene el ID del producto desde el atributo 'data-id' del botón
+                const productId = button.getAttribute('data-id');
+
+                // Verifica si hay un ID de producto válido
+                if (productId) {
+                    try {
+                        // Llama a la API en el servidor para eliminar el producto con el ID especificado
+                        const response = await fetch(`http://127.0.0.1:5000/productos/${productId}`, {
+                            method: 'DELETE',
+                        });
+
+                        // Si la respuesta es exitosa, elimina la fila del producto en la tabla
+                        if (response.ok) {
+                            button.closest('tr').remove();
+                            console.log('Producto eliminado correctamente');
+                        } else {
+                            console.error('Error al eliminar el producto');
+                        }
+                    } catch (error) {
+                        // Muestra un mensaje de error en caso de fallos en la conexión con el servidor
+                        console.error('Error al conectar con el servidor:', error);
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
+
+

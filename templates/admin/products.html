@@ -1,0 +1,87 @@
+<!-- Incluye la plantilla del encabezado ('header.html') para mantener una estructura consistente en todas las páginas -->
+{% include 'admin/header.html' %}
+<br>
+
+<!-- Contenedor principal que alberga el formulario de productos y la tabla de productos existentes -->
+<div class="container">
+    <div class="row">
+        <!-- Columna que contiene el formulario para añadir productos -->
+        <div class="col-md-5">
+            <div class="card">
+                <div class="card-header">Datos del producto</div>
+                <div class="card-body">
+                    <!-- Formulario para añadir productos, con acción que envía los datos a la ruta 'admin_products_send' -->
+                    <form action="{{ url_for('admin_products_send') }}" method="post">
+                        <!-- Campo para ingresar el nombre del producto -->
+                        <div class="mb-3">
+                            <label for="txtNombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="txtNombre" id="txtNombre" placeholder="Escriba el nombre del producto" />
+                        </div>
+                        <!-- Campo para ingresar el precio del producto -->
+                        <div class="mb-3">
+                            <label for="txtPrecio" class="form-label">Precio</label>
+                            <input type="number" step="0.01" class="form-control" name="txtPrecio" id="txtPrecio" placeholder="Ingrese el precio del producto" />
+                        </div>
+                        <!-- Campo para ingresar la cantidad de stock disponible del producto -->
+                        <div class="mb-3">
+                            <label for="txtStock" class="form-label">Stock</label>
+                            <input type="number" class="form-control" name="txtStock" id="txtStock" placeholder="Ingrese el stock del producto" value="0"/>
+                        </div>
+                        <!-- Campo para ingresar la URL de la imagen del producto -->
+                        <div class="mb-3">
+                            <label for="txtImagen" class="form-label">URL de Imagen</label>
+                            <input type="text" class="form-control" name="txtImagen" id="txtImagen" placeholder="Pegue la URL de la imagen" />
+                        </div>
+                        <!-- Botón para enviar el formulario y agregar el producto -->
+                        <button type="submit" class="btn btn-primary">Agregar</button>
+                    </form>
+                </div>
+                <!-- Pie de tarjeta -->
+                <div class="card-footer text-muted">Footer</div>
+            </div>
+        </div>
+
+        <!-- Columna que contiene la tabla con la lista de productos actuales -->
+        <div class="col-md-7">
+            <div class="table-responsive">
+                <table class="table table-light">
+                    <thead>
+                        <!-- Encabezados de las columnas de la tabla -->
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Imagen</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Stock</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Bucle que recorre cada producto en la lista de productos y muestra cada uno en una fila de la tabla -->
+                        {% for producto in productos %}
+                        <tr class="">
+                            <!-- Muestra el ID del producto -->
+                            <td scope="row">{{ producto.id }}</td>
+                            <!-- Muestra el nombre del producto -->
+                            <td>{{ producto.nombre }}</td>
+                            <!-- Muestra el precio del producto -->
+                            <td>{{ producto.precio }}</td>
+                            <!-- Muestra la cantidad en stock del producto -->
+                            <td>{{ producto.stock }}</td>
+                            <!-- Muestra la imagen del producto con un ancho fijo de 100px -->
+                            <td><img src="{{ producto.imagen }}" alt="Imagen de {{ producto.nombre }}" width="100"></td>
+                            <!-- Botón para eliminar el producto, con atributo 'data-id' para identificar el producto a eliminar -->
+                            <td>
+                                <button class="btn btn-danger delete-product" data-id="{{ producto.id }}">Eliminar</button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Incluye la plantilla del pie de página ('footer.html') para mantener una estructura consistente en todas las páginas -->
+{% include 'admin/footer.html' %}
